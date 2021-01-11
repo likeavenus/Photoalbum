@@ -1,6 +1,6 @@
 # Приложение для хранения фотографий
-# Стек технологий:
-## React, Firebase, SCSS
+## Стек технологий:
+### React, Firebase, SCSS
 
 Ниже readme для create-react-app
 

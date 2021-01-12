@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 
-export const Card = () => {
+
+export const Card = ({ imgUrl, description }) => {
     return (
-        <div className={styles.card}>Card component</div>
+        <div className={styles.card}>
+            <img src={imgUrl} />
+            <p>{description}</p>
+        </div>
     )
 }

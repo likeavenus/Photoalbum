@@ -6,7 +6,10 @@ import { Popup } from '../Popup';
 
 export const CardsContainer = () => {
    const [photos, setPhotos] = useState([]);
-   const [isPopupActive, setPopup] = useState(false);
+   const [popupSettings, setPopupSettings] = useState({
+      isActive: false,
+      id: null
+   });
 
    useEffect(() => {
       fetch('https://jsonplaceholder.typicode.com/albums/1/photos')
@@ -16,14 +19,23 @@ export const CardsContainer = () => {
          })
    }, []);
    const showImg = (id) => {
-      console.log(id);
+      setPopupSettings({
+         isActive: true,
+         id
+      });
+   }
+   const closeImg = () => {
+      setPopupSettings({
+         isActive: false,
+         id: null
+      });
    }
    const photoArr = photos.map(({ id, title, url }) => {
-      return <Card key={id} imgUrl={url} description={title} onClick={() => console.log(id)} />
+      return <Card key={id} imgUrl={url} description={title} openCard={() => showImg(id)} />
    });
    return (
       <section className={styles.container}>
-         {isPopupActive && 'popup is active'}
+         {popupSettings.isActive && <Popup imgUrl={photos.find(({ id }) => id === popupSettings.id).url} closeCard={() => closeImg()} />}
          {photoArr}
       </section>
    )

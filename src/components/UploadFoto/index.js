@@ -13,7 +13,7 @@ export const Upload = () => {
    const onButtonClick = () => {
 
    }
-   console.log(file);
+   // console.log(file);
 
    return (
       <div>

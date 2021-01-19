@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import firebase from "firebase/app";
 import "firebase/storage";
 import styles from './styles.module.scss';
@@ -9,7 +9,7 @@ export const Upload = () => {
    const [file, setFile] = useState(null);
    const [uploadError, setUploadError] = useState(false);
    const [uploadingState, setUploadingState] = useState(false);
-
+   const fileInput = useRef(null);
    const storageRef = firebase.storage().ref();
    const metadata = {
       contentType: 'image/jpeg'
@@ -29,20 +29,24 @@ export const Upload = () => {
             setUploadError(true);
             throw new Error(error);
          }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                console.log('File available at', downloadURL);
                setUploadingState(false);
-             });
+               setFile(null);
+               fileInput.current.parentElement.reset();
+            });
          })
       }
    }
-
+   const handleOnSubmit = (e) => {
+      e.preventDefault();
+   };
    return (
-      <div>
+      <form onSubmit={handleOnSubmit}>
          <h3>Загрузите фотографию</h3>
-         <input type="file" onChange={onInputChange} />
+         <input type="file" onChange={onInputChange} ref={fileInput} />
          <button onClick={onButtonClick}>Отправить</button>
          {uploadingState && <p>Загрузка</p>}
-      </div>
+      </form>
    )
 }

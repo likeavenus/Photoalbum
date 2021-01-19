@@ -10,7 +10,7 @@ export const init = () => {
         messagingSenderId: "48004309131",
         appId: "1:48004309131:web:36c50ce064fce365dff48e",
         measurementId: "G-SF3RGPJQPJ"
-      };
+    };
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }

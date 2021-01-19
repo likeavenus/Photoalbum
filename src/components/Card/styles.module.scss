@@ -1,4 +1,18 @@
 .card {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 10px;
+    width: 300px;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-size: 0;
+
+    & img {
+        object-fit: cover;
+        width: 300px;
+        height: 300px;
+    }
+
+    &:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, .9);
+    }
 }

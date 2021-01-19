@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
 import { CardsContainer } from './components/CardsContainer';
 import { Upload } from './components/UploadFoto';
@@ -10,8 +10,8 @@ function App() {
   const [uploadError, setUploadError] = useState(false);
   const [uploadingState, setUploadingState] = useState(false);
   const fileInput = useRef(null);
-
   const [photos, setPhotos] = useState([]);
+  
   const storageRef = firebase.storage().ref();
   const listRef = storageRef.child('images/');
   const metadata = {
@@ -24,10 +24,10 @@ function App() {
     return Promise.all(items.map(item => item.getDownloadURL().then((data) => data)));
   }
 
-  const onInputChange = (e) => {
+  const onInputChange = useCallback((e) => {
     setFile(null);
     setFile(e.target.files[0]);
-  }
+  }, [setFile]);
 
   const onButtonClick = () => {
     if (file) {
@@ -50,7 +50,9 @@ function App() {
 
   useEffect(() => {
     fetchData().then(data => setPhotos(data));
-  }, [file]);
+  }, [uploadingState]);
+
+  console.log('=== RENDER ===')
   return (
     <div className="App">
       <Upload file={file} onInputChange={onInputChange} uploadingState={uploadingState} onButtonClick={onButtonClick} fileInput={fileInput} />

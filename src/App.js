@@ -20,7 +20,7 @@ function App() {
 
   const fetchData = async () => {
     const promise = await listRef.listAll();
-    const items = await promise.items;
+    const items = promise.items;
     return Promise.all(items.map(item => item.getDownloadURL().then((data) => data)));
   }
 

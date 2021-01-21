@@ -1,0 +1,23 @@
+.counters {
+   display: flex;
+   padding: 0 5px;
+}
+
+.likeButtonIcon {
+   padding: 15px;
+   height: 24px;
+   width: 24px;
+   background: url(../../assets/img/heart.svg);
+
+   &:hover {
+      stroke: #000;
+   }
+
+   &.active {
+      background-color: red;
+   }
+}
+
+.likeCounter {
+   font-size: 1.5rem;
+}

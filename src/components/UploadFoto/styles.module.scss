@@ -1,0 +1,43 @@
+.input__wrapper {
+   width: 100%;
+   position: relative;
+   margin: 15px 0;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.input__file {
+   opacity: 0;
+   visibility: hidden;
+   position: absolute;
+}
+
+.input__file__label {
+   padding: 15px;
+   height: 40px;
+   background: #1bbc9b;
+   color: #fff;
+   font-size: 1.125rem;
+   font-weight: 700;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 3px;
+   cursor: pointer;
+}
+
+.input__file__button {
+   padding: 15px;
+   height: 40px;
+   background: #1bbc9b;
+   color: #fff;
+   font-size: 1.125rem;
+   font-weight: 700;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 3px;
+   cursor: pointer;
+}

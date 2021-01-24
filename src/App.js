@@ -12,9 +12,9 @@ function App() {
   const [file, setFile] = useState(null);
   const [uploadError, setUploadError] = useState(false);
   const [uploadingState, setUploadingState] = useState(false);
-  const fileInput = useRef(null);
+  const formRef = useRef(null);
   const [photos, setPhotos] = useState([]);
-  
+
   const storageRef = firebase.storage().ref();
   const metadata = {
     contentType: 'image/jpeg'
@@ -47,7 +47,7 @@ function App() {
           })
           setUploadingState(false);
           setFile(null);
-          fileInput.current.parentElement.reset();
+          formRef.current.reset();
         });
       })
     }
@@ -79,7 +79,7 @@ function App() {
 
   return (
     <div className="App">
-      <Upload file={file} onInputChange={onInputChange} uploadingState={uploadingState} onButtonClick={onButtonClick} fileInput={fileInput} />
+      <Upload file={file} onInputChange={onInputChange} uploadingState={uploadingState} onButtonClick={onButtonClick} formRef={formRef} />
       <CardsContainer photos={photos} onLikeButtonClick={onLikeButtonClick} />
     </div>
   );

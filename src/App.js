@@ -4,6 +4,9 @@ import { CardsContainer } from './components/CardsContainer';
 import { Upload } from './components/UploadFoto';
 import firebase from "firebase/app";
 import "firebase/storage";
+import "firebase/database";
+import "firebase/firestore";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -13,16 +16,12 @@ function App() {
   const [photos, setPhotos] = useState([]);
   
   const storageRef = firebase.storage().ref();
-  const listRef = storageRef.child('images/');
   const metadata = {
     contentType: 'image/jpeg'
   };
 
-  const fetchData = async () => {
-    const promise = await listRef.listAll();
-    const items = promise.items;
-    return Promise.all(items.map(item => item.getDownloadURL().then((data) => data)));
-  }
+  const db = firebase.firestore();
+  const docRef = db.collection('posts');
 
   const onInputChange = useCallback((e) => {
     setFile(null);
@@ -40,6 +39,11 @@ function App() {
       }, () => {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log('File available at', downloadURL);
+          docRef.add({
+            id: uuidv4(),
+            url: downloadURL,
+            description: '',
+          })
           setUploadingState(false);
           setFile(null);
           fileInput.current.parentElement.reset();
@@ -48,11 +52,24 @@ function App() {
     }
   }
 
+  const getPosts = async () => {
+    const querySnapshot = await docRef.get();
+    const posts = [];
+    querySnapshot.forEach(item => {
+      posts.push({
+        id: item.data().id,
+        url: item.data().url,
+        description: item.data().description,
+      });
+    });
+    return posts;
+  }
+
+
   useEffect(() => {
-    fetchData().then(data => setPhotos(data));
+    getPosts().then(data => setPhotos(data));
   }, [uploadingState]);
 
-  console.log('=== RENDER ===')
   return (
     <div className="App">
       <Upload file={file} onInputChange={onInputChange} uploadingState={uploadingState} onButtonClick={onButtonClick} fileInput={fileInput} />

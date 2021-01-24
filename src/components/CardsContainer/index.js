@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import { Card } from '../Card';
 import { Popup } from '../Popup';
-import firebase from "firebase/app";
 import "firebase/storage";
 
 export const CardsContainer = (props) => {
    const [popupSettings, setPopupSettings] = useState({
       isActive: false,
-      item: null
+      item: {
+         id: '',
+         url: '',
+         description: '',
+      }
    });
 
    const showImg = (item) => {
@@ -20,15 +23,19 @@ export const CardsContainer = (props) => {
    const closeImg = () => {
       setPopupSettings({
          isActive: false,
-         item: null
+         item: {
+            id: '',
+            url: '',
+            description: '',
+         }
       });
    }
 
    return (
       <section className={styles.container}>
-         {popupSettings.isActive && <Popup imgUrl={props.photos.find((item) => item === popupSettings.item)} closeCard={() => closeImg()} />}
-         {props.photos.map((item, index) => {
-            return <Card key={index} imgUrl={item} openCard={() => showImg(item)} />
+         {popupSettings.isActive && <Popup imgUrl={props.photos.find(photo => photo.id === popupSettings.item.id).url} closeCard={() => closeImg()} />}
+         {props.photos.map(({ id, url, description }) => {
+            return <Card key={url} imgUrl={url} openCard={() => showImg({ id, url, description })} />
          })}
       </section>
    )

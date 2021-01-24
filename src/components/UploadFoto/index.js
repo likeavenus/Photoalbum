@@ -1,6 +1,5 @@
 import React from 'react';
 import "firebase/storage";
-import styles from './styles.module.scss';
 
 export const Upload = (props) => {
    const handleOnSubmit = (e) => {

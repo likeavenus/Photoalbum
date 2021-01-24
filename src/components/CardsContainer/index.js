@@ -34,8 +34,16 @@ export const CardsContainer = (props) => {
    return (
       <section className={styles.container}>
          {popupSettings.isActive && <Popup imgUrl={props.photos.find(photo => photo.id === popupSettings.item.id).url} closeCard={() => closeImg()} />}
-         {props.photos.map(({ id, url, description }) => {
-            return <Card key={url} imgUrl={url} openCard={() => showImg({ id, url, description })} />
+         {props.photos.map(({ id, url, description, isLikedByMe }) => {
+            return (
+               <Card
+                  key={url}
+                  imgUrl={url}
+                  isLikedByMe={isLikedByMe}
+                  onLikeButtonClick={() => props.onLikeButtonClick(id)}
+                  openCard={() => showImg({ id, url, description, isLikedByMe })} 
+               />
+            )
          })}
       </section>
    )

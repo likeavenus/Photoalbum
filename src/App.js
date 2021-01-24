@@ -43,6 +43,7 @@ function App() {
             id: uuidv4(),
             url: downloadURL,
             description: '',
+            isLikedByMe: false,
           })
           setUploadingState(false);
           setFile(null);
@@ -60,9 +61,15 @@ function App() {
         id: item.data().id,
         url: item.data().url,
         description: item.data().description,
+        isLikedByMe: item.data().isLikedByMe,
       });
     });
     return posts;
+  }
+
+  //TODO: доделать добавление лайков
+  const onLikeButtonClick = async (id) => {
+    const snapshot = await docRef.get();
   }
 
 
@@ -73,7 +80,7 @@ function App() {
   return (
     <div className="App">
       <Upload file={file} onInputChange={onInputChange} uploadingState={uploadingState} onButtonClick={onButtonClick} fileInput={fileInput} />
-      <CardsContainer photos={photos} />
+      <CardsContainer photos={photos} onLikeButtonClick={onLikeButtonClick} />
     </div>
   );
 }

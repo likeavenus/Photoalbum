@@ -3,21 +3,30 @@
    padding: 0 5px;
 }
 
-.likeButtonIcon {
-   padding: 15px;
-   height: 24px;
-   width: 24px;
-   background: url(../../assets/img/heart.svg);
+.likeCounter {
+   font-size: 1.2rem;
+}
+
+.likeButton {
+   background: none;
+   border: none;
+   cursor: pointer;
+   transition: all .2s ease;
+   outline: none;
 
    &:hover {
-      stroke: #000;
-   }
-
-   &.active {
-      background-color: red;
+      transform: scale(1.2);
    }
 }
 
-.likeCounter {
-   font-size: 1.5rem;
+.heart {
+   width: 20px;
+   margin-right: 3px;
+   transition: all .2s ease;
+
+   &.active {
+      & path:nth-child(3) {
+         fill: red;
+      }
+   }
 }

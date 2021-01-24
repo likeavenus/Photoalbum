@@ -1,15 +1,17 @@
 import React, { useState, useRef } from 'react';
 import styles from './styles.module.scss';
+import { ReactComponent as HeartImg } from '../../assets/img/heart.svg';
 
 export const Counters = (props) => {
-   const [likeCounter, setLikeCounter] = useState(false);
-   const [viewCounter, setViewCounter] = useState(0);
-   const heart = useRef(null);
+
+   let heartClass = props.isLikedByMe ? `${styles.heart} ${styles.active}` : styles.heart;
 
    return (
       <div className={styles.counters}>
-         <div ref={heart} className={likeCounter ? `${styles.likeButtonIcon} ${styles.active}` : styles.likeButtonIcon} onClick={() => setLikeCounter(!likeCounter)}></div>
-         <p className={styles.likeCounter}>{Number(likeCounter)}</p>
+         <button onClick={() => {props.onLikeButtonClick(props.id)}} className={styles.likeButton}>
+            <HeartImg className={heartClass}/>  
+         </button>
+         {/* <p className={styles.likeCounter}>{Number(props.isLikedByMe)}</p> */}
       </div>
    )
 }

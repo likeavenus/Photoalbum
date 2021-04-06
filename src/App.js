@@ -18,11 +18,6 @@ function App() {
     contentType: 'image/jpeg'
   };
 
-  const fetchData = async () => {
-    const promise = await listRef.listAll();
-    const items = promise.items;
-    return Promise.all(items.map(item => item.getDownloadURL().then((data) => data)));
-  }
 
   const onInputChange = useCallback((e) => {
     setFile(null);
@@ -49,7 +44,13 @@ function App() {
   }
 
   useEffect(() => {
+    const fetchData = async () => {
+      const promise = await listRef.listAll();
+      const items = promise.items;
+      return Promise.all(items.map(item => item.getDownloadURL().then((data) => data)));
+    }
     fetchData().then(data => setPhotos(data));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadingState]);
 
   console.log('=== RENDER ===')
